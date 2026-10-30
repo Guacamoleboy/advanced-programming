@@ -1,0 +1,77 @@
+.intro {
+	max-width: 680px;
+	padding: 88px 0 78px;
+}
+
+.author {
+	margin: 0 0 20px;
+	color: var(--color-text-muted);
+	font-size: 14px;
+}
+
+.intro h1 {
+	margin: 0;
+	font-size: clamp(40px, 6vw, 58px);
+	font-weight: var(--font-weight-semibold);
+	letter-spacing: -2px;
+	line-height: 1.08;
+}
+
+.introCopy {
+	max-width: 560px;
+	margin: 22px 0 0;
+	color: var(--color-text-secondary);
+	font-size: var(--font-size-lead);
+	line-height: 1.7;
+}
+
+.sectionHeading {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	margin-bottom: 17px;
+	padding-bottom: 12px;
+	border-bottom: var(--border-width) var(--border-style) var(--color-border);
+}
+
+.sectionHeading h2 {
+	margin: 0;
+	font-size: 17px;
+	font-weight: var(--font-weight-semibold);
+}
+
+.sectionHeading span {
+	color: var(--color-text-muted);
+	font-size: var(--font-size-sm);
+}
+
+.postGrid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 12px;
+}
+
+@media (max-width: 680px) {
+	.intro {
+		padding: 70px 0 58px;
+	}
+
+	.intro h1 {
+		font-size: 46px;
+	}
+
+	.postGrid {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 420px) {
+	.intro h1 {
+		font-size: 40px;
+		letter-spacing: -1.3px;
+	}
+
+	.introCopy {
+		font-size: 15px;
+	}
+}

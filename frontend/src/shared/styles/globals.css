@@ -1,0 +1,72 @@
+:root {
+
+  color-scheme: dark;
+  font-family: var(--font-family-sans);
+  color: var(--color-text);
+  background: var(--color-background);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+
+	/* Color palette */
+	--color-background: #171717;
+	--color-surface: #1e1e1e;
+	--color-surface-hover: #222;
+	--color-text: #e7e7e7;
+	--color-text-secondary: #c3c3c3;
+	--color-text-muted: #a0a0a0;
+	--color-text-subtle: #929292;
+	--color-border: #343434;
+	--color-border-hover: #626262;
+	--color-accent: #c9c9c9;
+	--color-focus: #aaa;
+
+	/* Typography */
+	--font-family-sans: Arial, Helvetica, sans-serif;
+	--font-size-xs: 11px;
+	--font-size-sm: 12px;
+	--font-size-base: 15px;
+	--font-size-lead: 16px;
+	--font-size-card-title: 18px;
+	--font-weight-normal: 400;
+	--font-weight-semibold: 600;
+	--line-height-body: 1.85;
+
+	/* Layout and components */
+	--content-width: 80%;
+	--content-width-tablet: 94%;
+	--content-width-mobile: 96%;
+	--content-max-width: 1440px;
+	--article-text-width: 650px;
+	--article-heading-width: 680px;
+	--page-gutter: 40px;
+	--page-gutter-tablet: 24px;
+	--page-gutter-mobile: 18px;
+	--radius-control: 0.25rem;
+	--radius-card: 0.25rem;
+	--border-width: 1px;
+	--border-style: solid;
+	--frame-dash-length: 10px;
+	--frame-dash-gap: 8px;
+	--transition-quick: 150ms ease;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	min-width: 320px;
+	margin: 0;
+	background: var(--color-background);
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+a:focus-visible {
+	outline: 2px solid var(--color-focus);
+	outline-offset: 4px;
+}

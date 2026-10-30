@@ -1,0 +1,51 @@
+.postCard {
+	position: relative;
+	display: flex;
+	min-height: 185px;
+	flex-direction: column;
+	padding: 21px 22px 18px;
+	border: var(--border-width) var(--border-style) var(--color-border);
+	border-radius: var(--radius-card);
+	background: var(--color-surface);
+	transition: border-color var(--transition-quick), background var(--transition-quick);
+}
+
+.postCard:hover {
+	border-color: var(--color-border-hover);
+	background: var(--color-surface-hover);
+}
+
+.postNumber {
+	color: var(--color-text-subtle);
+	font-size: var(--font-size-sm);
+	font-variant-numeric: tabular-nums;
+}
+
+.postCard h3 {
+	margin: 18px 0 8px;
+	font-size: var(--font-size-card-title);
+	font-weight: var(--font-weight-semibold);
+	letter-spacing: -0.35px;
+}
+
+.description {
+	max-width: 390px;
+	margin: 0 0 18px;
+	color: var(--color-text-secondary);
+	font-size: 13px;
+	line-height: 1.6;
+}
+
+.meta {
+	display: flex;
+	gap: 14px;
+	margin-top: auto;
+	color: var(--color-text-subtle);
+	font-size: var(--font-size-xs);
+}
+
+@media (max-width: 680px) {
+	.postCard {
+		min-height: 165px;
+	}
+}
