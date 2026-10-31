@@ -12,8 +12,7 @@ export default function BlogPostCard({ post, index }: BlogPostCardProps) {
 		<Link className={styles.postCard} to={`/posts/${post.slug}`}>
 			<span className={styles.postNumber}>0{index + 1}</span>
 			<h3>{post.title}</h3>
-			<p className={styles.description}>{post.description}</p>
-			<div className={styles.meta}><span>{post.category}</span><span>{post.readTime}</span></div>
+			{post.description && <p className={styles.description}>{post.description}</p>}
 		</Link>
 	)
 }

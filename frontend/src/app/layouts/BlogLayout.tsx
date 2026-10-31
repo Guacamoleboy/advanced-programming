@@ -1,11 +1,10 @@
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
+import ToTop from '../../shared/components/totop/ToTop'
 import styles from './BlogLayout.module.css'
 
 const repositoryUrl = 'https://github.com/Guacamoleboy/advanced-programming'
 
 export default function BlogLayout() {
-	const isHome = useLocation().pathname === '/'
-
 	return (
 		<div className={styles.shell}>
 			<header className={styles.topbar}>
@@ -19,10 +18,11 @@ export default function BlogLayout() {
 			</header>
 
 			<Outlet />
+			<ToTop />
 
 			<footer className={styles.footer}>
-				{isHome ? <span>Jonas M. Larsen</span> : <a href="mailto:cph-jl325@stud.ek.dk">cph-jl325@stud.ek.dk</a>}
-				{isHome ? <a href="mailto:cph-jl325@stud.ek.dk">cph-jl325@stud.ek.dk</a> : <Link to="/">Back to course notes ↑</Link>}
+				<span>Jonas M. Larsen</span>
+				<a href="mailto:cph-jl325@stud.ek.dk">cph-jl325@stud.ek.dk</a>
 			</footer>
 		</div>
 	)

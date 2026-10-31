@@ -19,11 +19,15 @@ export default function BlogPostPage() {
 	return (
 		<main>
 			<article className={styles.article}>
-				<Link className={styles.backLink} to="/">← All course notes</Link>
+				<Link className={styles.backLink} to="/">
+					<svg viewBox="0 0 16 16" aria-hidden="true">
+						<path d="M10.5 3.5 6 8l4.5 4.5M6.5 8H13" />
+					</svg>
+					<span>All course notes</span>
+				</Link>
 				<div className={styles.articleHeading}>
 					<h1>{post.title}</h1>
-					<p className={styles.articleMeta}>{post.category} <span>·</span> {post.readTime}</p>
-					<p className={styles.articleDeck}>{post.description}</p>
+					{post.description && <p className={styles.articleDeck}>{post.description}</p>}
 				</div>
 				<div className={styles.markdownBody}><ReactMarkdown>{post.content}</ReactMarkdown></div>
 			</article>

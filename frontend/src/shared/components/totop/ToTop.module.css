@@ -1,0 +1,59 @@
+.button {
+	position: fixed;
+	z-index: 20;
+	right: 24px;
+	bottom: 24px;
+	display: grid;
+	width: 44px;
+	height: 44px;
+	place-items: center;
+	border: var(--border-width) var(--border-style) var(--color-border-hover);
+	border-radius: var(--radius-control);
+	background: var(--color-surface);
+	color: var(--color-text-secondary);
+	cursor: pointer;
+	animation: fadeInUp var(--transition-quick) both;
+	transition: background var(--transition-quick), border-color var(--transition-quick), color var(--transition-quick);
+}
+
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.button:hover {
+	border-color: var(--color-accent);
+	background: var(--color-surface-hover);
+	color: var(--color-text);
+}
+
+.button svg {
+	width: 20px;
+	height: 20px;
+	fill: none;
+	stroke: currentColor;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-width: 1.7px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.button {
+		animation: none;
+		transition: none;
+	}
+}
+
+@media (max-width: 480px) {
+	.button {
+		right: 16px;
+		bottom: 16px;
+	}
+}

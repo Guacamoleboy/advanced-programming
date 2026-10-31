@@ -1,22 +1,52 @@
-import postOne from './blog1.md?raw'
-import postTwo from './blog2.md?raw'
-import postThree from './blog3.md?raw'
-import postFour from './blog4.md?raw'
-import postFive from './blog5.md?raw'
+import graphNotes from './blog1.md?raw'
+import complexityNotes from './blog2.md?raw'
+import sortingNotes from './blog3.md?raw'
+import backtrackingNotes from './blog4.md?raw'
+import encryptionNotes from './blog5.md?raw'
+import reactMarkdownCheatSheet from './react-markdown-cheat-sheet.md?raw'
 
 export interface BlogPost {
 	slug: string
 	title: string
-	description: string
-	category: string
-	readTime: string
 	content: string
+	description?: string
 }
 
 export const posts: BlogPost[] = [
-	{ slug: 'projektstruktur', title: 'Projektstruktur og valg', description: 'En gennemgang af mapperne og de valg, der ligger bag opdelingen.', category: 'Projekt', readTime: '4 min', content: postOne },
-	{ slug: 'react-typescript', title: 'React med TypeScript', description: 'Hvordan komponenter og typer tilsammen gør brugerfladen lettere at arbejde med.', category: 'Frontend', readTime: '5 min', content: postTwo },
-	{ slug: 'markdown-indlaeg', title: 'Indlæg skrevet i Markdown', description: 'Sådan holdes indholdet adskilt fra præsentationen på siden.', category: 'Indhold', readTime: '4 min', content: postThree },
-	{ slug: 'responsivt-layout', title: 'Et layout til flere skærme', description: 'Små tilpasninger, der gør kort og artikler behagelige at læse på mobil.', category: 'CSS', readTime: '4 min', content: postFour },
-	{ slug: 'arbejdsproces', title: 'Arbejdsproces og refleksion', description: 'Noter om at bygge løsningen trin for trin og dokumentere undervejs.', category: 'Refleksion', readTime: '3 min', content: postFive },
+	{
+		slug: 'grafer-og-korteste-vej',
+		title: 'Grafer og korteste vej',
+		description: 'N/A Description',
+		content: graphNotes,
+	},
+	{
+		slug: 'kompleksitet-og-datastrukturer',
+		title: 'Kompleksitet og datastrukturer',
+		description: 'N/A Description',
+		content: complexityNotes,
+	},
+	{
+		slug: 'sortering',
+		title: 'Sortering',
+		description: 'N/A Description',
+		content: sortingNotes,
+	},
+	{
+		slug: 'backtracking',
+		title: 'Backtracking',
+		description: 'N/A Description',
+		content: backtrackingNotes,
+	},
+	{
+		slug: 'kryptering',
+		title: 'Kryptering',
+		description: 'N/A Description',
+		content: encryptionNotes,
+	},
+	{
+		slug: 'react-markdown-cheat-sheet',
+		title: 'React Markdown Cheat Sheet',
+		description: 'En praktisk reference til Markdown-syntaks, ReactMarkdown, plugins og typiske faldgruber.',
+		content: reactMarkdownCheatSheet,
+	},
 ]
