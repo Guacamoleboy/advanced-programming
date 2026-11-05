@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <title>Dijkstra — Labyrint</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #faf9f5;
+            color: #36352f;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        h1 { font-size: 1.4rem; margin-bottom: 6px; letter-spacing: 2px; }
+        p.sub { font-size: 0.85rem; color: #77756c; margin-bottom: 16px; }
+        canvas { display: block; }
+        #controls { margin-top: 14px; display: flex; gap: 12px; align-items: center; }
+        button {
+            background: #ffffff;
+            border: 1px solid #c9c6ba;
+            color: #36352f;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            min-width: 120px;
+        }
+        button:hover { background: #efede4; }
+        #speed-wrap { font-size: 0.85rem; color: #77756c; display: flex; align-items: center; gap: 8px; }
+        input[type=range] { accent-color: #1D9E75; }
+        #info { margin-top: 12px; font-size: 0.95rem; height: 22px; }
+        #legend { margin-top: 10px; display: flex; gap: 18px; font-size: 0.8rem; color: #77756c; }
+        #legend span { display: inline-flex; align-items: center; gap: 6px; }
+        #legend i { width: 14px; height: 14px; border-radius: 3px; display: inline-block; border: 1px solid #0002; }
+    </style>
+</head>
+<body>
+<h1>DIJKSTRA — LABYRINT</h1>
+<p class="sub">Bemærk hvordan Dijkstra breder sig i alle retninger</p>
+<canvas id="c"></canvas>
+<div id="legend">
+    <span><i style="background:#cfe0f7"></i>I køen</span>
+    <span><i style="background:#a8dcc0"></i>Besøgt</span>
+    <span><i style="background:#ffd166"></i>Korteste vej</span>
+</div>
+<div id="controls">
+    <button id="btn">▶ Start</button>
+    <button id="reset">↺ Reset</button>
+    <div id="speed-wrap">Hastighed: <input type="range" id="speed" min="1" max="10" value="5"></div>
+</div>
+<div id="info"></div>
+
+<script>
+    const ROWS = 12, COLS = 12, CELL = 48, MARGIN = 28;
+    const canvas = document.getElementById('c');
+    canvas.width = COLS * CELL + MARGIN;
+    canvas.height = ROWS * CELL + MARGIN;
+    const ctx = canvas.getContext('2d');
+
+    const COLORS = {
+        wall: '#36352f',
+        open: '#f3f2ea',
+        grid: '#dcd9cd',
+        queued: '#cfe0f7',
+        visited: '#a8dcc0',
+        path: '#ffd166',
+        start: '#1D9E75',
+        goal: '#D85A30',
+        label: '#77756c',
+    };
+
+    const grid = [
+        [0,0,0,1,0,0,0,1,0,0,0,0],
+        [1,1,0,1,0,1,0,1,0,1,1,0],
+        [0,0,0,0,0,1,0,0,0,0,1,0],
+        [0,1,1,1,1,1,1,1,1,1,1,0],
+        [0,0,0,0,0,0,0,0,1,0,0,0],
+        [1,1,1,0,1,1,1,0,1,1,0,0],
+        [0,0,0,0,0,0,1,0,0,0,0,0],
+        [0,1,1,1,1,1,0,1,1,1,1,0],
+        [0,0,0,0,1,0,0,0,0,0,1,0],
+        [1,1,0,1,1,0,1,1,0,1,1,0],
+        [0,0,0,0,0,0,1,0,0,0,1,0],
+        [0,1,1,1,0,1,1,0,1,1,1,0],
+    ];
+
+    const START = [0,0], GOAL = [11,11];
+
+    // State
+    let state = {};
+    let steps = [];
+    let stepIdx = 0;
+    let animTimer = null;
+    let running = false;
+    let finalPath = [];
+
+    function key(r,c) { return r+','+c; }
+
+    function buildSteps() {
+        steps = [];
+        finalPath = [];
+
+        const dist = {};
+        const prev = {};
+        const visited = new Set();
+        for (let r=0;r<ROWS;r++) for (let c=0;c<COLS;c++) dist[key(r,c)] = Infinity;
+        dist[key(...START)] = 0;
+
+        const queue = [[0, START[0], START[1]]];
+
+        while (queue.length > 0) {
+            queue.sort((a,b) => a[0]-b[0]);
+            const [d, r, c] = queue.shift();
+            const k = key(r,c);
+            if (visited.has(k)) continue;
+            visited.add(k);
+            steps.push({ type: 'visit', r, c, dist: d });
+            if (r === GOAL[0] && c === GOAL[1]) break;
+
+            for (const [dr,dc] of [[-1,0],[1,0],[0,-1],[0,1]]) {
+                const nr=r+dr, nc=c+dc;
+                if (nr<0||nr>=ROWS||nc<0||nc>=COLS) continue;
+                if (grid[nr][nc]===1) continue;
+                if (visited.has(key(nr,nc))) continue;
+                const nd = d + 1;
+                if (nd < dist[key(nr,nc)]) {
+                    dist[key(nr,nc)] = nd;
+                    prev[key(nr,nc)] = key(r,c);
+                    queue.push([nd, nr, nc]);
+                    steps.push({ type: 'queue', r: nr, c: nc, dist: nd });
+                }
+            }
+        }
+
+        // Reconstruct path
+        let cur = key(...GOAL);
+        while (cur) {
+            const [r,c] = cur.split(',').map(Number);
+            finalPath.unshift([r,c]);
+            cur = prev[cur];
+        }
+        steps.push({ type: 'done', path: finalPath });
+    }
+
+    function resetState() {
+        state = {};
+        for (let r=0;r<ROWS;r++) for (let c=0;c<COLS;c++) state[key(r,c)] = 'unvisited';
+    }
+
+    function cellText(text, x, y, color, size) {
+        ctx.fillStyle = color;
+        ctx.font = `bold ${size}px Segoe UI, Arial, sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(text, x, y);
+    }
+
+    function draw() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+
+        // Række- og kolonnenumre
+        for (let i=0;i<COLS;i++) cellText(i, MARGIN + i*CELL + CELL/2, MARGIN/2, COLORS.label, 12);
+        for (let i=0;i<ROWS;i++) cellText(i, MARGIN/2, MARGIN + i*CELL + CELL/2, COLORS.label, 12);
+
+        const done = steps[stepIdx-1]?.type === 'done';
+
+        for (let r=0;r<ROWS;r++) {
+            for (let c=0;c<COLS;c++) {
+                const x = MARGIN + c*CELL, y = MARGIN + r*CELL;
+                const k = key(r,c);
+                const isStart = r===START[0]&&c===START[1];
+                const isGoal = r===GOAL[0]&&c===GOAL[1];
+                const onPath = done && finalPath.some(([pr,pc])=>pr===r&&pc===c);
+
+                let fill;
+                if (grid[r][c]===1) fill = COLORS.wall;
+                else if (isStart) fill = COLORS.start;
+                else if (isGoal) fill = COLORS.goal;
+                else if (onPath) fill = COLORS.path;
+                else if (state[k] === 'visited') fill = COLORS.visited;
+                else if (state[k] === 'queued') fill = COLORS.queued;
+                else fill = COLORS.open;
+
+                ctx.fillStyle = fill;
+                ctx.fillRect(x,y,CELL,CELL);
+                ctx.strokeStyle = COLORS.grid;
+                ctx.lineWidth = 1;
+                ctx.strokeRect(x+0.5,y+0.5,CELL-1,CELL-1);
+
+                if (isStart) cellText('S', x+CELL/2, y+CELL/2, '#fff', 16);
+                if (isGoal) cellText('M', x+CELL/2, y+CELL/2, '#fff', 16);
+            }
+        }
+    }
+
+    function applyStep(s) {
+        const info = document.getElementById('info');
+        if (s.type === 'visit') {
+            state[key(s.r, s.c)] = 'visited';
+            info.textContent = `Besøger (${s.r},${s.c}) — dist=${s.dist}`;
+        } else if (s.type === 'queue') {
+            if (state[key(s.r,s.c)] !== 'visited') state[key(s.r,s.c)] = 'queued';
+            info.textContent = `→ Sætter (${s.r},${s.c}) i køen — dist=${s.dist}`;
+        } else if (s.type === 'done') {
+            const besoegt = Object.values(state).filter(v => v === 'visited').length;
+            info.textContent = `★ Korteste vej fundet! Længde: ${finalPath.length-1} skridt — ${besoegt} noder besøgt`;
+        }
+    }
+
+    function runNext() {
+        if (stepIdx >= steps.length) {
+            running = false;
+            document.getElementById('btn').textContent = '✓ Færdig';
+            return;
+        }
+        applyStep(steps[stepIdx]);
+        stepIdx++;
+        draw();
+        const delay = 1100 - document.getElementById('speed').value * 100;
+        animTimer = setTimeout(runNext, delay);
+    }
+
+    // Start / Pause / Fortsæt
+    document.getElementById('btn').addEventListener('click', () => {
+        const btn = document.getElementById('btn');
+        if (stepIdx >= steps.length) return; // færdig
+        if (running) {
+            clearTimeout(animTimer);
+            running = false;
+            btn.textContent = '▶ Fortsæt';
+        } else {
+            running = true;
+            btn.textContent = '⏸ Pause';
+            runNext();
+        }
+    });
+
+    document.getElementById('reset').addEventListener('click', () => {
+        clearTimeout(animTimer);
+        running = false;
+        stepIdx = 0;
+        finalPath = [];
+        document.getElementById('btn').textContent = '▶ Start';
+        document.getElementById('info').textContent = '';
+        resetState();
+        buildSteps();
+        draw();
+    });
+
+    buildSteps();
+    resetState();
+    draw();
+</script>
+</body>
+</html>
