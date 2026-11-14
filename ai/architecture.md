@@ -14,6 +14,17 @@ the shared `City` objects. The search classes receive their maps and endpoints
 rather than constructing example data themselves.
 `NodeWithCost` and `NodeWithDist` are separate queue-entry classes with fixed
 costs and `Comparable` implementations for the two search priorities.
+`portfolioTwo` separates list, search and set measurements, with a shared nanosecond
+timer, shared example-data creation in `MeasurementData`, and an immutable `CourseTask`
+entity whose ordering and equality use its number. Each class has its own source file;
+the portfolio packages do not use nested or anonymous classes.
+`portfolioThree` contains integer-array bubble, merge and quick sort, with separate
+data, swap, merge and partition classes. `portfolioFour` separates maze data, recursive
+backtracking and output. `portfolioFive.PortfolioFive` is an empty entry point awaiting
+the encryption assignment.
+`Main` keeps portfolio one active and provides commented calls for portfolios two to five.
+The blog entries for portfolios two to four describe the implementations and deadline dates;
+the encryption entry displays "Kommer snart".
 Exercise calls are updated in `Main` as they are implemented. Run it with `backend/` as
 the working directory because some examples read relative paths under `data/`.
 See [the backend README](../backend/README.md) for IDE and Maven instructions.

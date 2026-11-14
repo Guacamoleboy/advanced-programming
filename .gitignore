@@ -49,3 +49,4 @@ backend/.idea
 # === Sensitive ===
 docker-compose.yml
 **/config.properties
+/docs/explaining/

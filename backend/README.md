@@ -11,9 +11,15 @@ Java 17 og JUnit 5 med faste dependency- og pluginversioner.
    `backend/`-mappens absolutte sti. Hvis hele repositoryet er åbent som projekt,
    kan du bruge `$PROJECT_DIR$/backend`.
 
-`Main.java` kalder nu `portfolioOne.PortfolioOne`, som kører Dijkstra og A*.
-Byer, veje og gridlayout defineres i `portfolioOne/LocalMaps.java`.
-Tilføj eller skift kald til opgaverne i `Main`, efterhånden som du laver dem.
+`Main.java` kalder som standard `portfolioOne.PortfolioOne`, som kører Dijkstra og A*.
+Vælg en anden portfolio ved at kommentere det aktive kald ud og fjerne `//` foran
+det ønskede kald. `Main` indeholder kun kald, mens data og løsninger ligger i hver package:
+
+- `portfolioOne`: Dijkstra og A* med lokale byer.
+- `portfolioTwo`: målinger af lister, søgning og sæt.
+- `portfolioThree`: bubble sort, merge sort og quick sort på heltalsarrays.
+- `portfolioFour`: backtracking i en labyrint.
+- `portfolioFive`: tom startklasse, der afventer Signes opgavetekst.
 
 Kørselsmappen er vigtig: nogle af lærerens eksempler læser `data/Students.txt`
 med en relativ sti. Opgaveskabelonerne er bevaret, så ufærdige opgaver stadig skal

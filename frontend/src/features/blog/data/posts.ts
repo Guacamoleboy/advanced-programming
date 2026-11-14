@@ -21,25 +21,25 @@ export const posts: BlogPost[] = [
 	{
 		slug: 'kompleksitet-og-datastrukturer',
 		title: 'Kompleksitet og datastrukturer',
-		description: 'N/A Description',
+		description: '500.000 tal i lister og sæt. Hvad koster det at finde, indsætte og fjerne dem?',
 		content: complexityNotes,
 	},
 	{
 		slug: 'sortering',
 		title: 'Sortering',
-		description: 'N/A Description',
+		description: 'De samme tal sorteret med bubble sort, merge sort og quick sort.',
 		content: sortingNotes,
 	},
 	{
 		slug: 'backtracking',
 		title: 'Backtracking',
-		description: 'N/A Description',
+		description: 'En vej gennem labyrinten, hvor blindgyderne skal prøves og fjernes igen.',
 		content: backtrackingNotes,
 	},
 	{
 		slug: 'kryptering',
 		title: 'Kryptering',
-		description: 'N/A Description',
+		description: 'Kommer snart.',
 		content: encryptionNotes,
 	}
 ]
