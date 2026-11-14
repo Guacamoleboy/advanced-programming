@@ -10,21 +10,27 @@ public class MeasurementData {
 
     // _________________________________________________________________________________________________________________
 
-    public static void fillNumbers(Collection<Integer> numbers, int count) {
-        for (int number = 0; number < count; number++) {
+    public static void fillNumbers(Collection<Integer> numbers, int elementCount) {
+
+        for (int number = 0; number < elementCount; number++) {
             numbers.add(number);
         }
+
     }
 
     // _________________________________________________________________________________________________________________
 
-    public static List<CourseTask> createTasks(int count) {
-        List<CourseTask> tasks = new ArrayList<>(count);
-        String[] topics = {"Grafer", "Kompleksitet", "Sortering", "Backtracking", "Kryptering"};
-        for (int number = 0; number < count; number++) {
-            tasks.add(new CourseTask(number, topics[number % topics.length]));
+    public static List<CourseTask> createTasks(int taskCount) {
+
+        List<CourseTask> tasks = new ArrayList<>(taskCount);
+        String[] taskTitles = {"Graphs", "Complexity", "Sorting", "Backtracking", "Encryption"};
+
+        for (int taskNumber = 0; taskNumber < taskCount; taskNumber++) {
+            tasks.add(new CourseTask(taskNumber, taskTitles[taskNumber % taskTitles.length]));
         }
+
         return tasks;
+
     }
 
 }

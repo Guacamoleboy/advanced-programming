@@ -7,9 +7,11 @@ public class PortfolioTwo {
     // _________________________________________________________________________________________________________________
 
     public static void main(String[] args) {
-        new ListMeasurements().run();
-        new SearchMeasurements().run();
-        new SetMeasurements().run();
+
+        new ListMeasurement().run();
+        new SearchMeasurement().run();
+        new SetMeasurement().run();
+
     }
 
 }

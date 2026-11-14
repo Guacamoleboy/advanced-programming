@@ -6,26 +6,37 @@ public class ArrayMerge {
 
     // _________________________________________________________________________________________________________________
 
-    public static void merge(int[] destination, int[] left, int[] right) {
+    public static void merge(int[] numbers, int[] leftHalf, int[] rightHalf) {
+
         int leftIndex = 0;
         int rightIndex = 0;
-        int destinationIndex = 0;
+        int mergedIndex = 0;
 
         // Take the smallest next value. On a tie, take the left one first.
-        while (leftIndex < left.length && rightIndex < right.length) {
-            if (left[leftIndex] <= right[rightIndex]) {
-                destination[destinationIndex++] = left[leftIndex++];
+        while (leftIndex < leftHalf.length && rightIndex < rightHalf.length) {
+            if (leftHalf[leftIndex] <= rightHalf[rightIndex]) {
+                numbers[mergedIndex] = leftHalf[leftIndex];
+                leftIndex++;
             } else {
-                destination[destinationIndex++] = right[rightIndex++];
+                numbers[mergedIndex] = rightHalf[rightIndex];
+                rightIndex++;
             }
+            mergedIndex++;
         }
+
         // Copy the remaining values from the half that is not empty yet.
-        while (leftIndex < left.length) {
-            destination[destinationIndex++] = left[leftIndex++];
+        while (leftIndex < leftHalf.length) {
+            numbers[mergedIndex] = leftHalf[leftIndex];
+            leftIndex++;
+            mergedIndex++;
         }
-        while (rightIndex < right.length) {
-            destination[destinationIndex++] = right[rightIndex++];
+
+        while (rightIndex < rightHalf.length) {
+            numbers[mergedIndex] = rightHalf[rightIndex];
+            rightIndex++;
+            mergedIndex++;
         }
+
     }
 
 }

@@ -7,7 +7,9 @@ public class PortfolioFive {
     // _________________________________________________________________________________________________________________
 
     public static void main(String[] args) {
-        // Afventer opgaveteksten fra Signe.
+
+        // Waiting for the assignment from Signe.
+
     }
 
 }

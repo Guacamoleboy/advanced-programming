@@ -6,10 +6,12 @@ public class NumberSwap {
 
     // _________________________________________________________________________________________________________________
 
-    public static void swap(int[] numbers, int first, int second) {
-        int temporary = numbers[first];
-        numbers[first] = numbers[second];
-        numbers[second] = temporary;
+    public static void swap(int[] numbers, int firstIndex, int secondIndex) {
+
+        int savedNumber = numbers[firstIndex];
+        numbers[firstIndex] = numbers[secondIndex];
+        numbers[secondIndex] = savedNumber;
+
     }
 
 }
