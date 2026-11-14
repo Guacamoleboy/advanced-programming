@@ -50,3 +50,6 @@ backend/.idea
 docker-compose.yml
 **/config.properties
 /docs/explaining/
+/ai/
+/AGENTS.md
+/.github/agent-instructions.md
