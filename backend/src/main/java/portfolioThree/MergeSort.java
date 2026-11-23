@@ -6,7 +6,7 @@ import java.util.Arrays;
 // ________
 //
 // Base case = Fewer than 2 values. Nothing left to split.
-// void is enough because merge writes back into the SAME input array.
+// Merge writes back into the input array.
 
 public class MergeSort {
 
@@ -14,23 +14,39 @@ public class MergeSort {
 
     // _________________________________________________________________________________________________________________
 
-    public void sort(int[] numbers) {
+    public SortMeasurement sort(LocalDistance[] distances, boolean showSteps) {
 
-        // Empty arrays and single values are already sorted.
-        if (numbers.length < 2) {
+        SortMeasurement measurement = new SortMeasurement();
+        sort(distances, measurement, showSteps, 0);
+        return measurement;
+
+    }
+
+    // _________________________________________________________________________________________________________________
+
+    private void sort(LocalDistance[] distances, SortMeasurement measurement, boolean showSteps, int depth) {
+
+        if (distances.length < 2) {
             return;
         }
 
-        int middleIndex = numbers.length / 2;
+        // Divide.
+        int middleIndex = distances.length / 2;
+        LocalDistance[] leftHalf = Arrays.copyOfRange(distances, 0, middleIndex);
+        LocalDistance[] rightHalf = Arrays.copyOfRange(distances, middleIndex, distances.length);
+        if (showSteps) {
+            SortOutput.divide(leftHalf, rightHalf, depth);
+        }
 
-        // copyOfRange includes the first index, but NOT the end index.
-        int[] leftHalf = Arrays.copyOfRange(numbers, 0, middleIndex);
-        int[] rightHalf = Arrays.copyOfRange(numbers, middleIndex, numbers.length);
+        // Solve each half recursively.
+        sort(leftHalf, measurement, showSteps, depth + 1);
+        sort(rightHalf, measurement, showSteps, depth + 1);
 
-        // Sort both halves before writing their merged values back to the input.
-        sort(leftHalf);
-        sort(rightHalf);
-        ArrayMerge.merge(numbers, leftHalf, rightHalf);
+        // Combine.
+        ArrayMerge.merge(distances, leftHalf, rightHalf, measurement);
+        if (showSteps) {
+            SortOutput.merged(distances, depth);
+        }
 
     }
 

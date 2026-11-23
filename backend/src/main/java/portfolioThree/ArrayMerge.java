@@ -6,33 +6,34 @@ public class ArrayMerge {
 
     // _________________________________________________________________________________________________________________
 
-    public static void merge(int[] numbers, int[] leftHalf, int[] rightHalf) {
+    public static void merge(LocalDistance[] distances, LocalDistance[] leftHalf, LocalDistance[] rightHalf,
+                             SortMeasurement measurement) {
 
         int leftIndex = 0;
         int rightIndex = 0;
         int mergedIndex = 0;
 
-        // Take the smallest next value. On a tie, take the left one first.
+        // Taking the left element first on a tie preserves the original order.
         while (leftIndex < leftHalf.length && rightIndex < rightHalf.length) {
-            if (leftHalf[leftIndex] <= rightHalf[rightIndex]) {
-                numbers[mergedIndex] = leftHalf[leftIndex];
+            if (measurement.compare(leftHalf[leftIndex], rightHalf[rightIndex]) <= 0) {
+                distances[mergedIndex] = leftHalf[leftIndex];
                 leftIndex++;
             } else {
-                numbers[mergedIndex] = rightHalf[rightIndex];
+                distances[mergedIndex] = rightHalf[rightIndex];
                 rightIndex++;
             }
             mergedIndex++;
         }
 
-        // Copy the remaining values from the half that is not empty yet.
+        // Copy the remaining elements from the half that still has elements.
         while (leftIndex < leftHalf.length) {
-            numbers[mergedIndex] = leftHalf[leftIndex];
+            distances[mergedIndex] = leftHalf[leftIndex];
             leftIndex++;
             mergedIndex++;
         }
 
         while (rightIndex < rightHalf.length) {
-            numbers[mergedIndex] = rightHalf[rightIndex];
+            distances[mergedIndex] = rightHalf[rightIndex];
             rightIndex++;
             mergedIndex++;
         }

@@ -27,7 +27,7 @@ export const posts: BlogPost[] = [
 	{
 		slug: 'sortering',
 		title: 'Sortering',
-		description: 'De samme tal sorteret med bubble sort, merge sort og quick sort.',
+		description: 'De samme afstande sorteret med Bubble Sort, Merge Sort, Quick Sort og Heap Sort.',
 		content: sortingNotes,
 	},
 	{

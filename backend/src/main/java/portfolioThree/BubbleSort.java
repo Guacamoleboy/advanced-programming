@@ -6,27 +6,32 @@ public class BubbleSort {
 
     // _________________________________________________________________________________________________________________
 
-    public void sort(int[] numbers) {
+    public SortMeasurement sort(LocalDistance[] distances, boolean showSteps) {
 
-        // Each pass puts the largest remaining number at the unsorted end.
-        for (int unsortedEnd = numbers.length - 1; unsortedEnd > 0; unsortedEnd--) {
+        SortMeasurement measurement = new SortMeasurement();
+
+        // Each pass puts the largest remaining distance at the unsorted end.
+        for (int unsortedEnd = distances.length - 1; unsortedEnd > 0; unsortedEnd--) {
 
             boolean swapped = false;
-
-            // Compare neighbors. Values after unsortedEnd are already in place.
             for (int index = 0; index < unsortedEnd; index++) {
-                if (numbers[index] > numbers[index + 1]) {
-                    NumberSwap.swap(numbers, index, index + 1);
+                if (measurement.compare(distances[index], distances[index + 1]) > 0) {
+                    measurement.swap(distances, index, index + 1);
                     swapped = true;
                 }
             }
 
-            // No swaps means the entire array is already sorted.
+            if (showSteps) {
+                SortOutput.bubblePass(distances, unsortedEnd, swapped);
+            }
+
             if (!swapped) {
-                return;
+                break;
             }
 
         }
+
+        return measurement;
 
     }
 

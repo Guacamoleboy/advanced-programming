@@ -1,14 +1,15 @@
 package portfolioThree;
 
-public class LocalDistance {
+public record LocalDistance(String placeName, int kilometers) {
 
     // Attributes
 
     // _________________________________________________________________________________________________________________
 
-    public static int[] createDistances() {
+    @Override
+    public String toString() {
 
-        return new int[]{14, 2, 9, 7, 20, 3, 9, 5};
+        return "%s (%d km)".formatted(placeName, kilometers);
 
     }
 

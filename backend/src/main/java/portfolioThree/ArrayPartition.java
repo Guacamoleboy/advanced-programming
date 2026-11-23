@@ -3,8 +3,8 @@ package portfolioThree;
 // Learning
 // ________
 //
-// Pivot = The value used to split this part of the array.
-// Last value as pivot is simple, but sorted input gives uneven splits -> O(n squared).
+// The last element is the Lomuto pivot.
+// On sorted input, a last-element pivot leaves one side empty, giving O(n²) comparisons.
 
 public class ArrayPartition {
 
@@ -12,22 +12,22 @@ public class ArrayPartition {
 
     // _________________________________________________________________________________________________________________
 
-    public static int partition(int[] numbers, int firstIndex, int lastIndex) {
+    public static int partition(LocalDistance[] distances, int firstIndex, int lastIndex,
+                                SortMeasurement measurement) {
 
-        int pivotValue = numbers[lastIndex];
-        int nextSmallerIndex = firstIndex;
+        LocalDistance pivot = distances[lastIndex];
+        int nextLeftIndex = firstIndex;
 
-        // Move values <= pivot to the front of this part of the array.
+        // Extend the left partition whenever an element is at most the pivot.
         for (int index = firstIndex; index < lastIndex; index++) {
-            if (numbers[index] <= pivotValue) {
-                NumberSwap.swap(numbers, index, nextSmallerIndex);
-                nextSmallerIndex++;
+            if (measurement.compare(distances[index], pivot) <= 0) {
+                measurement.swap(distances, index, nextLeftIndex);
+                nextLeftIndex++;
             }
         }
 
-        // Place pivot after the smaller values. It is now in its final position.
-        NumberSwap.swap(numbers, nextSmallerIndex, lastIndex);
-        return nextSmallerIndex;
+        measurement.swap(distances, nextLeftIndex, lastIndex);
+        return nextLeftIndex;
 
     }
 
